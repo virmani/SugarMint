@@ -1,4 +1,7 @@
 SugarMint::Application.routes.draw do
+
+  root to: 'home#index'
+
   resources :events
 
   resources :event_types
