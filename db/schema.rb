@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123012604) do
+ActiveRecord::Schema.define(:version => 20120123013624) do
+
+  create_table "event_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "eventtype_id"
+    t.float    "value"
+    t.boolean  "is_manual"
+    t.string   "comment"
+    t.integer  "user_id"
+    t.datetime "event_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

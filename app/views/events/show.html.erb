@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Eventtype:</b>
+  <%= @event.eventtype_id %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @event.value %>
+</p>
+
+<p>
+  <b>Is manual:</b>
+  <%= @event.is_manual %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @event.comment %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @event.user_id %>
+</p>
+
+<p>
+  <b>Event time:</b>
+  <%= @event.event_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

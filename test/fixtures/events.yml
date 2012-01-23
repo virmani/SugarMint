@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  eventtype_id: 1
+  value: 1.5
+  is_manual: false
+  comment: MyString
+  user_id: 1
+  event_time: 2012-01-22 17:36:24
+
+two:
+  eventtype_id: 1
+  value: 1.5
+  is_manual: false
+  comment: MyString
+  user_id: 1
+  event_time: 2012-01-22 17:36:24
