@@ -1,11 +1,10 @@
 class EventsController < ApplicationController
 
   before_filter :authenticate_user!
-
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = current_user.events
 
     respond_to do |format|
       format.html # index.html.erb
@@ -54,6 +53,46 @@ class EventsController < ApplicationController
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /events/batchnew
+  def batch_new
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  # POST /events
+  # POST /events.json
+  def batch_create
+    uploaded_io = params[:coPilotFile].tempfile
+
+    #Skip a line
+    line = uploaded_io.gets
+    #event_type = EventType.find(1)
+
+    ActiveRecord::Base.transaction do
+      while(line = uploaded_io.gets)
+        fields = line.split("\t")
+        if fields[2] == '1'
+        @timestamp = Time.at(convert_excel_timestamp(fields[0]))
+        @bg = Float(fields[11])
+        
+        logger.debug @timestamp
+        current_user.events.create(:eventtype_id => 1, :value => @bg, :is_manual => false, :event_time => @timestamp)
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => 'index' }
+    #format.json { render json: @event, status: :created, location: @event }
+    end
+  end
+
+  def convert_excel_timestamp(dateStr)
+    @decimalNum = Float(dateStr);
+    return (@decimalNum - 25569) * 86400;
   end
 
   # PUT /events/1

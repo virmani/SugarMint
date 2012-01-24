@@ -1,0 +1,6 @@
+<h1>Batch events upload</h1>
+
+<%= form_tag({:action => :batch_create}, :multipart => true) do %>
+  <%= file_field_tag 'coPilotFile' %>
+  <%= submit_tag("Upload") %>
+<% end %>
