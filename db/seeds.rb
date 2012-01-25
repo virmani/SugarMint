@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+EventType.create(name: 'BloodSugar')
+EventType.create(name: 'Basal')
+EventType.create(name: 'PumpChange')
+EventType.create(name: 'Bolus')
+EventType.create(name: 'Food')

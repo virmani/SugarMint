@@ -66,7 +66,8 @@ class EventsController < ApplicationController
   # POST /events.json
   def batch_create
     uploaded_io = params[:coPilotFile].tempfile
-
+    uploaded_io.set_encoding('iso-8859-1:iso-8859-1')
+  
     #Skip a line
     line = uploaded_io.gets
     #event_type = EventType.find(1)
@@ -74,12 +75,45 @@ class EventsController < ApplicationController
     ActiveRecord::Base.transaction do
       while(line = uploaded_io.gets)
         fields = line.split("\t")
+        timestamp = Time.at(convert_excel_timestamp(fields[0]))
+        value = -1
+        event_type = -1
+        should_insert = true;
+        comment = fields[36]
+
+        logger.debug comment.encoding.name
+
         if fields[2] == '1'
-        @timestamp = Time.at(convert_excel_timestamp(fields[0]))
-        @bg = Float(fields[11])
-        
-        logger.debug @timestamp
-        current_user.events.create(:eventtype_id => 1, :value => @bg, :is_manual => false, :event_time => @timestamp)
+          #BG reading
+          value = Float(fields[11])
+          event_type = 1
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+          
+        elsif fields[2] == '2' && (fields[10] == '0' || fields[10] == '1')
+          #Basal Rate change
+          value = Float(fields[20])
+          event_type = 2
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+          
+          if fields[26].index("Pod activated") != -1
+            #New Pod activated
+            value = 0.0
+            event_type = 2
+            current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => "New Pod Activated")
+          end
+          
+        elsif fields[2] == '3' && (fields[10] == '0' || fields[10] == '1')
+          #Bolus Intake
+          value = Float(fields[20])
+          event_type = 3
+          comment = (fields[27] + "<br/>" + fields[36])
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+          
+        elsif fields[2] == '5'
+          #food intake
+          value = Float(fields[21])
+          event_type = 4
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
         end
       end
     end
@@ -91,8 +125,7 @@ class EventsController < ApplicationController
   end
 
   def convert_excel_timestamp(dateStr)
-    @decimalNum = Float(dateStr);
-    return (@decimalNum - 25569) * 86400;
+    return (Float(dateStr) - 25569) * 86400;
   end
 
   # PUT /events/1
