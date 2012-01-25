@@ -66,7 +66,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def batch_create
     uploaded_io = params[:coPilotFile].tempfile
-    uploaded_io.set_encoding('iso-8859-1:iso-8859-1')
+    uploaded_io.set_encoding('iso-8859-1:utf-8')
   
     #Skip a line
     line = uploaded_io.gets
@@ -80,8 +80,6 @@ class EventsController < ApplicationController
         event_type = -1
         should_insert = true;
         comment = fields[36]
-
-        logger.debug comment.encoding.name
 
         if fields[2] == '1'
           #BG reading
