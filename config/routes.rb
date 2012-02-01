@@ -1,6 +1,10 @@
 SugarMint::Application.routes.draw do
 
-  root to: 'home#index'
+  match '/home', :to => 'pages#home'
+  match '/help', :to => 'pages#help'
+  match '/about', :to => 'pages#about'
+
+  root :to => 'pages#home'
   
   match '/events/batchnew', :controller => 'events', :action => 'batch_new'
   match '/events/batchcreate', :controller => 'events', :action => 'batch_create'
