@@ -1,3 +1,7 @@
+*{
+  direction: ltr;	
+}
+
 .container {
   width: 710px;
 }
