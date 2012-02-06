@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :authenticate_user!
   def recreate_results_for (eventtype_id)
     bg = current_user.events.where(:eventtype_id => eventtype_id).map do |bg|
-      [bg[:event_time], bg[:value]]
+      [bg[:event_time].to_f()*1000 , bg[:value]]
     end
 
     respond_to do |format|
@@ -28,8 +28,8 @@ class EventsController < ApplicationController
   end
 
   def pump
-    bg = current_user.events.where(:eventtype_id => 5).map do |bg|
-      {:x => bg[:event_time], :text => 'New Pod Activated'}
+      bg = current_user.events.where(:eventtype_id => 5).map do |bg|
+      {:x => bg[:event_time].to_f()*1000, :text => 'New Pod Activated'}
     end
 
     respond_to do |format|

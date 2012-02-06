@@ -8,4 +8,6 @@ class PagesController < ApplicationController
   def about
   end
 
+  def allcharts
+  end
 end

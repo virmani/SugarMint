@@ -3,6 +3,7 @@ SugarMint::Application.routes.draw do
   match '/home', :to => 'pages#home'
   match '/help', :to => 'pages#help'
   match '/about', :to => 'pages#about'
+  match '/allcharts', :to => 'pages#allcharts'
 
   root :to => 'pages#home'
   

@@ -48,7 +48,7 @@ SugarMint::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
   # Adding blueprint css to  precompile list
-  config.assets.precompile += %w( custom.css blueprint/screen.css blueprint/print.css blueprint/ie.css )
+  config.assets.precompile += %w( custom.css blueprint/screen.css blueprint/print.css blueprint/ie.css Highstock-1.0.Beta/js/highstock.js )
   
 
   # Disable delivery errors, bad email addresses will be ignored
