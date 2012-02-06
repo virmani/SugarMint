@@ -1,6 +1,42 @@
 class EventsController < ApplicationController
 
   before_filter :authenticate_user!
+  def recreate_results_for (eventtype_id)
+    bg = current_user.events.where(:eventtype_id => eventtype_id).map do |bg|
+      [bg[:event_time], bg[:value]]
+    end
+
+    respond_to do |format|
+      format.json { render json:  bg}
+    end
+  end
+
+  def blood_glucose
+    recreate_results_for 1
+  end
+
+  def food
+    recreate_results_for 4
+  end
+
+  def basal
+    recreate_results_for 2
+  end
+
+  def bolus
+    recreate_results_for 3
+  end
+
+  def pump
+    bg = current_user.events.where(:eventtype_id => 5).map do |bg|
+      {:x => bg[:event_time], :text => 'New Pod Activated'}
+    end
+
+    respond_to do |format|
+      format.json { render json:  bg}
+    end
+  end
+
   # GET /events
   # GET /events.json
   def index
@@ -67,7 +103,7 @@ class EventsController < ApplicationController
   def batch_create
     uploaded_io = params[:coPilotFile].tempfile
     uploaded_io.set_encoding('iso-8859-1:utf-8')
-  
+
     #Skip a line
     line = uploaded_io.gets
     #event_type = EventType.find(1)
@@ -82,36 +118,36 @@ class EventsController < ApplicationController
         comment = fields[36]
 
         if fields[2] == '1'
-          #BG reading
-          value = Float(fields[11])
-          event_type = 1
-          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
-          
+        #BG reading
+        value = Float(fields[11])
+        event_type = 1
+        current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+
         elsif fields[2] == '2' && (fields[10] == '0' || fields[10] == '1')
-          #Basal Rate change
-          value = Float(fields[20])
-          event_type = 2
-          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
-          
           if fields[26].index("Pod activated") != -1
             #New Pod activated
             value = 0.0
-            event_type = 2
+            event_type = 5
             current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => "New Pod Activated")
+          else
+            #Basal Rate change
+            value = Float(fields[20])
+            event_type = 2
+            current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
           end
-          
+
         elsif fields[2] == '3' && (fields[10] == '0' || fields[10] == '1')
-          #Bolus Intake
-          value = Float(fields[20])
-          event_type = 3
-          comment = (fields[27] + "<br/>" + fields[36])
-          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
-          
+        #Bolus Intake
+        value = Float(fields[20])
+        event_type = 3
+        comment = (fields[27] + "<br/>" + fields[36])
+        current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+
         elsif fields[2] == '5'
-          #food intake
-          value = Float(fields[21])
-          event_type = 4
-          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+        #food intake
+        value = Float(fields[21])
+        event_type = 4
+        current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
         end
       end
     end

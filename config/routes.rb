@@ -8,6 +8,11 @@ SugarMint::Application.routes.draw do
   
   match '/events/batchnew', :controller => 'events', :action => 'batch_new'
   match '/events/batchcreate', :controller => 'events', :action => 'batch_create'
+  match '/events/bg', :controller=>'events', :action => 'blood_glucose'
+  match '/events/food', :controller=>'events', :action => 'food'
+  match '/events/basal', :controller=>'events', :action => 'basal'
+  match '/events/bolus', :controller=>'events', :action => 'bolus'
+  match '/events/pump', :controller=>'events', :action => 'pump'
 
   resources :events
 
