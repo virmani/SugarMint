@@ -6,6 +6,7 @@ gem 'rails', '3.1.1'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3', '1.3.4', :group => :development
+gem 'mysql'
 gem 'rack', '1.3.6'
 gem 'devise', '1.5.0'
 
@@ -42,4 +43,11 @@ end
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+end
+
+group :development do
+  #gem 'ruby_core_source'
+  #gem 'linecache19', '>= 0.5.13'
+  #gem 'ruby-debug-base19x', '>= 0.11.30.pre3'
+  #gem 'ruby-debug-ide'
 end

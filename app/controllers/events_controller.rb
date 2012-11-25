@@ -124,7 +124,7 @@ class EventsController < ApplicationController
         current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
 
         elsif fields[2] == '2' && (fields[10] == '0' || fields[10] == '1')
-          if fields[26].index("Pod activated") != -1
+          if fields[26].index("Pod activated") != nil
             #New Pod activated
             value = 0.0
             event_type = 5

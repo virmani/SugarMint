@@ -227,7 +227,7 @@
 				var results = {};
 
 				$.each(urls, function(index) {
-					$.getJSON('http://0.0.0.0:3000/events/' + urls[index] + '.json', function(response) {
+					$.getJSON('http://localhost.twitter.com:3000/events/' + urls[index] + '.json', function(response) {
 						results[index] = response;
 						++done;
 
