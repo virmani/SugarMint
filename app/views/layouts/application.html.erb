@@ -1,17 +1,77 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>SugarMint</title>
-		<%= csrf_meta_tag %>
-		<%= render 'layouts/stylesheets' %>
-	</head>
-	<body>
-		<div class="container">
-			<%= render 'layouts/header' %>
-			<section class="round">
-				<%= yield %>
-			</section>
-			<%= render 'layouts/footer' %>
-		</div>
-	</body>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sugar Mint</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <%= stylesheet_link_tag "bootstrap/bootstrap", :media => "all" %>
+
+  <style>
+      body {
+          padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="#">Sugar Mint</a>
+
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="active"><%= link_to "Home", home_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "Help", help_path %></li>
+          <li>
+            <% if user_signed_in? %>
+                <%= link_to current_user.email, "#" %> <!-- TODO: add ellipsis to the end ...-->
+            <% else %>
+                <%= link_to "Sign up", new_user_registration_path %>
+            <% end %>
+          </li>
+          <li>
+            <% if user_signed_in? %>
+                <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+            <% else %>
+                <%= link_to "Sign in", new_user_session_path %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <%= yield %>
+
+</div>
+<!-- /container -->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<%= javascript_include_tag "application"%>
+<%= javascript_include_tag "chart"%>
+<%= javascript_include_tag "Highstock-1.2.4/js/highstock.js" %>
+
+</body>
 </html>
