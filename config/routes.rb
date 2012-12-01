@@ -3,7 +3,7 @@ SugarMint::Application.routes.draw do
   match '/home', :to => 'pages#home'
   match '/help', :to => 'pages#help'
   match '/about', :to => 'pages#about'
-  match '/allcharts', :to => 'pages#allcharts'
+  match '/timeline', :to => 'pages#timeline'
 
   root :to => 'pages#home'
   
@@ -19,7 +19,7 @@ SugarMint::Application.routes.draw do
 
   resources :event_types
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

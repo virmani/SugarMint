@@ -155,8 +155,10 @@ $(document).ready(function () {
     var urls = ['bg'];
     var results = {};
 
+    var root_url = $("#server-url").attr("data-url");
+
     $.each(urls, function (index) {
-        $.getJSON('http://localhost.twitter.com:3000/events/' + urls[index] + '.json', function (response) {
+        $.getJSON(root_url + '/events/' + urls[index] + '.json', function (response) {
             results[index] = response;
             ++done;
 

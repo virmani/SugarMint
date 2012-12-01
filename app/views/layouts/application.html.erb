@@ -40,7 +40,7 @@
           <li><%= link_to "Help", help_path %></li>
           <li>
             <% if user_signed_in? %>
-                <%= link_to current_user.email, "#" %> <!-- TODO: add ellipsis to the end ...-->
+                <%= link_to current_user.email, timeline_path %> <!-- TODO: add ellipsis to the end ...-->
             <% else %>
                 <%= link_to "Sign up", new_user_registration_path %>
             <% end %>
@@ -60,6 +60,7 @@
 </div>
 
 <div class="container">
+  <input type="hidden" id="server-url" data-url="<%= root_url %>">Click me</button>
 
   <%= yield %>
 

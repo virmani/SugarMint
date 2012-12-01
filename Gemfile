@@ -9,6 +9,8 @@ gem 'sqlite3', '1.3.4', :group => :development
 gem 'mysql'
 gem 'rack', '1.3.6'
 gem 'devise', '2.1.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 gem 'execjs'
 
