@@ -1,15 +1,6 @@
 class EventsController < ApplicationController
 
   before_filter :authenticate_user!
-  def recreate_results_for (eventtype_id)
-    bg = current_user.events.where(:eventtype_id => eventtype_id).map do |bg|
-      [bg[:event_time].to_f()*1000 , bg[:value]]
-    end
-
-    respond_to do |format|
-      format.json { render json:  bg}
-    end
-  end
 
   def blood_glucose
     recreate_results_for 1
@@ -28,23 +19,19 @@ class EventsController < ApplicationController
   end
 
   def pump
-      bg = current_user.events.where(:eventtype_id => 5).map do |bg|
+    bg = current_user.events.where(:eventtype_id => 5).map do |bg|
       {:x => bg[:event_time].to_f()*1000, :text => 'New Pod Activated'}
     end
 
     respond_to do |format|
-      format.json { render json:  bg}
+      format.json { render json: bg }
     end
   end
 
-  # GET /events
-  # GET /events.json
-  def index
-    @events = current_user.events
-
+  # GET /events/batchnew
+  def batch_new
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @events }
+      format.html
     end
   end
 
@@ -91,13 +78,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # GET /events/batchnew
-  def batch_new
-    respond_to do |format|
-      format.html
-    end
-  end
-
   # POST /events
   # POST /events.json
   def batch_create
@@ -109,7 +89,7 @@ class EventsController < ApplicationController
     #event_type = EventType.find(1)
 
     ActiveRecord::Base.transaction do
-      while(line = uploaded_io.gets)
+      while (line = uploaded_io.gets)
         fields = line.split("\t")
         timestamp = Time.at(convert_excel_timestamp(fields[0]))
         value = -1
@@ -118,10 +98,10 @@ class EventsController < ApplicationController
         comment = fields[36]
 
         if fields[2] == '1'
-        #BG reading
-        value = Float(fields[11])
-        event_type = 1
-        current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+          #BG reading
+          value = Float(fields[11])
+          event_type = 1
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
 
         elsif fields[2] == '2' && (fields[10] == '0' || fields[10] == '1')
           if fields[26].index("Pod activated") != nil
@@ -137,29 +117,22 @@ class EventsController < ApplicationController
           end
 
         elsif fields[2] == '3' && (fields[10] == '0' || fields[10] == '1')
-        #Bolus Intake
-        value = Float(fields[20])
-        event_type = 3
-        comment = (fields[27] + "<br/>" + fields[36])
-        current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+          #Bolus Intake
+          value = Float(fields[20])
+          event_type = 3
+          comment = (fields[27] + "<br/>" + fields[36])
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
 
         elsif fields[2] == '5'
-        #food intake
-        value = Float(fields[21])
-        event_type = 4
-        current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
+          #food intake
+          value = Float(fields[21])
+          event_type = 4
+          current_user.events.create(:eventtype_id => event_type, :value => value, :is_manual => false, :event_time => timestamp, :comment => comment)
         end
       end
     end
 
-    respond_to do |format|
-      format.html { redirect_to :action => 'index' }
-    #format.json { render json: @event, status: :created, location: @event }
-    end
-  end
-
-  def convert_excel_timestamp(dateStr)
-    return (Float(dateStr) - 25569) * 86400;
+    redirect_to :controller => 'pages', :action => 'home' and return
   end
 
   # PUT /events/1
@@ -188,5 +161,21 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :ok }
     end
+  end
+
+  private
+
+  def recreate_results_for (eventtype_id)
+    bg = current_user.events.where(:eventtype_id => eventtype_id).map do |bg|
+      [bg[:event_time].to_f()*1000, bg[:value]]
+    end
+
+    respond_to do |format|
+      format.json { render json: bg }
+    end
+  end
+
+  def convert_excel_timestamp(dateStr)
+    return (Float(dateStr) - 25569) * 86400;
   end
 end
