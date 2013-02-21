@@ -1,4 +1,4 @@
-require "omniauth-facebook"
+require "omniauth-foursquare"
 
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
@@ -195,8 +195,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-  config.omniauth :facebook, "383335348417279", "dc9585f3ddc3b6a7ac510b537d79163a",
-                  :scope => 'email, user_about_me, user_checkins, user_location, read_stream'
+
+  config.omniauth :foursquare, ENV["FOURSQUARE_CLIENTID"], ENV["FOURSQUARE_SECRET"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

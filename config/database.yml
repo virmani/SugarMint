@@ -7,10 +7,10 @@ development:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: sugarmint
+  database: <%= ENV["SUGAR_DB"] %>
   pool: 5
-  username: sugar
-  password: sugarchallenged
+  username: <%= ENV["SUGAR_DB_USER"] %>
+  password: <%= ENV["SUGAR_DB_PASSWORD"] %>
   host: localhost
   port: 3306
 
@@ -18,10 +18,10 @@ test:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: sugarmint
+  database: <%= ENV["SUGAR_DB"] %>
   pool: 5
-  username: sugar
-  password: sugarchallenged
+  username: <%= ENV["SUGAR_DB_USER"] %>
+  password: <%= ENV["SUGAR_DB_PASSWORD"] %>
   host: localhost
   port: 3306
 
@@ -29,10 +29,10 @@ production:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: sugarmint_prod
+  database: <%= ENV["SUGAR_DB"] %>
   pool: 5
-  username: sugar
-  password: sugarchallenged
+  username: <%= ENV["SUGAR_DB_USER"] %>
+  password: <%= ENV["SUGAR_DB_PASSWORD"] %>
   host: localhost
   port: 3306
 
