@@ -14,6 +14,7 @@ SugarMint::Application.routes.draw do
   match '/events/basal', :controller=>'events', :action => 'basal'
   match '/events/bolus', :controller=>'events', :action => 'bolus'
   match '/events/pump', :controller=>'events', :action => 'pump'
+  match '/events/foursquare', :to=>'life_events#index'
 
   resources :events
 

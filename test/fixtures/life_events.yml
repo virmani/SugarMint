@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  sub_title: MyString
+  source: MyString
+  image: MyString
+  location: 
+  venue_name: MyString
+  latitude: 1.5
+  longitude: 1.5
+  venue_image_url: MyString
+  venue_category: MyString
+  venue_url: MyString
+  occured_at: 2013-02-23 14:34:43
+
+two:
+  title: MyString
+  sub_title: MyString
+  source: MyString
+  image: MyString
+  location: 
+  venue_name: MyString
+  latitude: 1.5
+  longitude: 1.5
+  venue_image_url: MyString
+  venue_category: MyString
+  venue_url: MyString
+  occured_at: 2013-02-23 14:34:43

@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(:version => 20130220070828) do
 
   create_table "event_types", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "events", :force => true do |t|
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 20130220070828) do
     t.string   "comment"
     t.integer  "user_id"
     t.datetime "event_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "user_auths", :force => true do |t|
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20130220070828) do
     t.string   "provider"
     t.string   "uid"
     t.string   "auth_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "user_auths", ["user_id"], :name => "index_user_auths_on_user_id"
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20130220070828) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

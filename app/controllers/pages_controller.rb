@@ -3,8 +3,6 @@ class PagesController < ApplicationController
   before_filter :authenticate_user!, :only => [:home, :timeline]
 
   def home
-    puts "ALL: #{current_user.all_checkins.length}"
-
     if user_signed_in? && current_user && current_user.events && current_user.events.length>0
       render 'timeline'
     else

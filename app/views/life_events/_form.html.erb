@@ -1,0 +1,65 @@
+<%= form_for(@life_event) do |f| %>
+  <% if @life_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@life_event.errors.count, "error") %> prohibited this life_event from being saved:</h2>
+
+      <ul>
+      <% @life_event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :sub_title %><br />
+    <%= f.text_field :sub_title %>
+  </div>
+  <div class="field">
+    <%= f.label :source %><br />
+    <%= f.text_field :source %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= f.text_field :image %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :venue_name %><br />
+    <%= f.text_field :venue_name %>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :venue_image_url %><br />
+    <%= f.text_field :venue_image_url %>
+  </div>
+  <div class="field">
+    <%= f.label :venue_category %><br />
+    <%= f.text_field :venue_category %>
+  </div>
+  <div class="field">
+    <%= f.label :venue_url %><br />
+    <%= f.text_field :venue_url %>
+  </div>
+  <div class="field">
+    <%= f.label :occured_at %><br />
+    <%= f.datetime_select :occured_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

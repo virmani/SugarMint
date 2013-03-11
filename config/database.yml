@@ -4,7 +4,7 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: <%= ENV["SUGAR_DB"] %>
@@ -15,7 +15,7 @@ development:
   port: 3306
 
 test:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: <%= ENV["SUGAR_DB"] %>
@@ -26,7 +26,7 @@ test:
   port: 3306
 
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: <%= ENV["SUGAR_DB"] %>

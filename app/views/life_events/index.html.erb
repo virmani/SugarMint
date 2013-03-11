@@ -1,0 +1,39 @@
+<h1>Listing life_events</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Sub title</th>
+    <th>Source</th>
+    <th>Image</th>
+    <th>Venue name</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Venue image url</th>
+    <th>Venue category</th>
+    <th>Venue url</th>
+    <th>Occured at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @life_events.each do |life_event| %>
+  <tr>
+    <td><%= life_event.title %></td>
+    <td><%= life_event.sub_title %></td>
+    <td><%= life_event.source %></td>
+    <td><%= life_event.image_url %></td>
+    <td><%= life_event.venue_name %></td>
+    <td><%= life_event.latitude %></td>
+    <td><%= life_event.longitude %></td>
+    <td><%= life_event.venue_icon %></td>
+    <td><%= life_event.venue_category %></td>
+    <td><%= life_event.venue_url %></td>
+    <td><%= life_event.occured_at %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @life_event.title %>
+</p>
+
+<p>
+  <b>Sub title:</b>
+  <%= @life_event.sub_title %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @life_event.source %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <%= @life_event.image %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @life_event.location %>
+</p>
+
+<p>
+  <b>Venue name:</b>
+  <%= @life_event.venue_name %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @life_event.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @life_event.longitude %>
+</p>
+
+<p>
+  <b>Venue image url:</b>
+  <%= @life_event.venue_image_url %>
+</p>
+
+<p>
+  <b>Venue category:</b>
+  <%= @life_event.venue_category %>
+</p>
+
+<p>
+  <b>Venue url:</b>
+  <%= @life_event.venue_url %>
+</p>
+
+<p>
+  <b>Occured at:</b>
+  <%= @life_event.occured_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_life_event_path(@life_event) %> |
+<%= link_to 'Back', life_events_path %>
