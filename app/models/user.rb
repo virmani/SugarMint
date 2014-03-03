@@ -16,11 +16,11 @@ class User < ActiveRecord::Base
                      :conditions => ["user_auths.provider = ? and user_auths.uid = ?", auth.provider, auth.uid]).first
 
     unless user
-      user = User.create(name: auth.extra.raw_info.name,
-                         email: auth.info.email,
-                         password: Devise.friendly_token[0, 20]
+      user = User.create(:name => auth.extra.raw_info.name,
+                         :email => auth.info.email,
+                         :password => Devise.friendly_token[0, 20]
       )
-      auth = UserAuth.create(user: user, uid: auth.uid, provider: auth.provider, auth_token: auth[:credentials][:token])
+      auth = UserAuth.create(:user => user, :uid => auth.uid, :provider => auth.provider, :auth_token => auth[:credentials][:token])
     end
     user
   end

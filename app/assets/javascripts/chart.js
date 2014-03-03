@@ -8,6 +8,18 @@ $(document).ready(function () {
       zoomType: '',
       alignTicks: false,
       events: {
+        load: function (event) {
+          setTimeout(function () {
+            $('input.highcharts-range-selector', $('#' + this.container))
+              .datepicker({
+                dateFormat: 'yy-mm-dd',
+                onSelect: function (dateText) {
+                  this.onchange();
+                  this.onblur();
+                }
+              })
+          }, 0)
+        },
         selection: function (event) {
           if (event.xAxis) {
             onSelected(event.xAxis[0].min, event.xAxis[0].max);
@@ -28,8 +40,6 @@ $(document).ready(function () {
         enableMouseTracking: true
       },
       series: {
-        cropThreshold: 1000000,
-        turboThreshold: 1000000,
         stickyTracking: true,
         allowPointSelect: true,
         marker: {
@@ -167,10 +177,6 @@ $(document).ready(function () {
 
   var root_url = $("#server-url").attr("data-url");
 
-  $(function () {
-    $("#datepicker").datepicker();
-  });
-
   $.each(urls, function (index) {
     $.getJSON(root_url + '/events/' + urls[index] + '.json', function (response) {
       results[index] = response;
@@ -181,21 +187,42 @@ $(document).ready(function () {
         bgOptions.series = [bgseries];
       }
     });
+
   });
 
-  $.getJSON(root_url + '/events/foursquare.json', function (response) {
-    seriesData = new Array(response.length);
-    for (var i = 0; i < response.length; i++) {
-      dataPoint = {};
-      dataPoint["x"] = response[i]["occured_at"];
-      dataPoint["title"] = response[i]["source_name"];
-      dataPoint["text"] = response[i]["short_summary"];
-      seriesData[i] = dataPoint;
+  var renderInterval = self.setInterval(drawChart, 10)
+
+  function drawChart() {
+    if (done == urls.length) {
+      bgChart = new Highcharts.StockChart(bgOptions);
+      window.clearInterval(renderInterval);
+      $.getJSON(root_url + '/events/foursquare.json', addFoursquareSeries);
     }
+  }
 
-    foursquareSeries.data = seriesData;
-    bgOptions.series.push(foursquareSeries)
-    bgChart = new Highcharts.StockChart(bgOptions);
-  });
+  function addFoursquareSeries(response) {
+    addFoursquare(response)
+    //var foursquareInteval = self.setInterval(function() { addFoursquare(response) }, 10)
+
+    function addFoursquare(response) {
+      if (done == urls.length) {
+        seriesData = new Array(response.length);
+        for (var i = 0; i < response.length; i++) {
+          dataPoint = {};
+          dataPoint["x"] = response[i]["occured_at"];
+          dataPoint["title"] = response[i]["source_name"];
+          dataPoint["text"] = response[i]["short_summary"];
+          seriesData[i] = dataPoint;
+        }
+
+        foursquareSeries.data = seriesData;
+        bgChart.addSeries(foursquareSeries);
+
+        //window.clearInterval(foursquareInteval);
+      }
+    }
+  }
+
+
 });
 

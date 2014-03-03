@@ -6,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <%= stylesheet_link_tag "http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "bootstrap/bootstrap", :media => "all" %>
-
-  <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap/bootstrap-responsive", :media => "all" %>
 
   <style>
     body {
@@ -61,11 +63,10 @@
   </div>
 </div>
 
+<input type="hidden" id="server-url" data-url="<%= root_url %>"/>
+
 <div class="container">
-  <input type="hidden" id="server-url" data-url="<%= root_url %>"/>
-
   <%= yield %>
-
 </div>
 <!-- /container -->
 
@@ -73,10 +74,30 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <%= javascript_include_tag "application" %>
-<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"  %>
-<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"  %>
+<%= javascript_include_tag "http://code.highcharts.com/stock/highstock.js" %>
 <%= javascript_include_tag "chart" %>
-<%= javascript_include_tag "Highstock-1.2.4/js/highstock.js" %>
+<%= javascript_include_tag "http://code.jquery.com/ui/1.10.0/jquery-ui.js" %>
 
+<script>
+  $('#fromDate').datepicker({
+    dateFormat: 'yy-mm-dd',
+    onSelect: function (dateText) {
+      var inputMin = $('input.highcharts-range-selector[name="min"]');
+      inputMin.val(dateText);
+      inputMin.trigger('change')
+      inputMin.trigger('blur')
+    }
+  });
+
+  $('#toDate').datepicker({
+    dateFormat: 'yy-mm-dd',
+    onSelect: function (dateText) {
+      var inputMax = $('input.highcharts-range-selector[name="max"]');
+      inputMax.val(dateText);
+      inputMax.trigger('change')
+      inputMax.trigger('blur')
+    }
+  });
+</script>
 </body>
 </html>
