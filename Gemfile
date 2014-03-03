@@ -8,8 +8,8 @@ gem 'rails', '3.2.11'
 gem 'mysql2'
 gem 'rack', '~> 1.4.0'
 gem 'devise', '2.1.0'
-gem 'omniauth'
-gem 'omniauth-foursquare'
+gem 'omniauth', '1.2.1'
+gem 'omniauth-foursquare', '1.0.0'
 gem "rails-backbone"
 gem "json"
 gem "typhoeus"
